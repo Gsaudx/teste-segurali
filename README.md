@@ -8,3 +8,4 @@
 - [x] Frontend: Setup inicial (Vite, React, TS, Tailwind)
 - [x] Frontend: Configuração do Axios e React Query
 - [x] Frontend: Criação de Hooks (useUsers) e Componentes UI (Input, Button, UserCard)
+- [x] Frontend: Implementação da Tela Principal (Formulário e Listagem)
