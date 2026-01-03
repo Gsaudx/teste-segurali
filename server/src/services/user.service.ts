@@ -13,7 +13,7 @@ export class UserService {
     const userAlreadyExists = await this.userRepository.findByEmail(data.email);
 
     if (userAlreadyExists) {
-      throw new AppError('User already exists', 409);
+      throw new AppError('Usuário já existe', 409);
     }
 
     return this.userRepository.create(data);
@@ -27,7 +27,7 @@ export class UserService {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      throw new AppError('User not found', 404);
+      throw new AppError('Usuário não encontrado', 404);
     }
 
     return user;
