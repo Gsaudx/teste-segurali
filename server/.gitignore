@@ -1,6 +1,7 @@
 node_modules/
-# Keep environment variables out of version control
-.env
+
+# Estou deixando o .env porque a única informação "sensível" que tem nele é a connection string do banco de dados local (rodando no docker), que não tem problema nenhum vazar
+#.env
 
 /src/generated/prisma
 dist/
