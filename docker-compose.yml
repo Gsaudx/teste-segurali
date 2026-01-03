@@ -1,3 +1,4 @@
+name: teste_segurali
 version: '3.8'
 
 services:
@@ -12,6 +13,31 @@ services:
       - POSTGRES_DB=segurali_db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d segurali_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build: ./server
+    container_name: segurali_server
+    ports:
+      - "3333:3333"
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@postgres:5432/segurali_db?schema=public
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npx prisma migrate deploy && npm run start"
+
+  web:
+    build: ./web
+    container_name: segurali_web
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
 
 volumes:
   pgdata:
