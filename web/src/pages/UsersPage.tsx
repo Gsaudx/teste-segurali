@@ -1,5 +1,6 @@
 import { UserForm } from '../features/users/components/UserForm';
 import { UserList } from '../features/users/components/UserList';
+import { UserSearch } from '../features/users/components/UserSearch';
 
 export function UsersPage() {
   return (
@@ -15,8 +16,13 @@ export function UsersPage() {
         </header>
 
         <main className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <UserForm />
-          <UserList />
+          <div>
+            <UserForm />
+          </div>
+          <div className="space-y-8">
+            <UserSearch />
+            <UserList />
+          </div>
         </main>
       </div>
     </div>

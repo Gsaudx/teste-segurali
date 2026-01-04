@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useUsers } from '../hooks/useUsers';
 import { UserCard } from './UserCard';
 import { Button } from '../../../components/ui/Button';
-import { Modal } from '../../../components/ui/Modal';
+import { UserDetailsModal } from './UserDetailsModal';
 import type { User } from '../schemas/user';
 
 export function UserList() {
@@ -74,32 +74,10 @@ export function UserList() {
         )}
       </section>
 
-      <Modal
-        isOpen={!!selectedUser}
-        onClose={() => setSelectedUser(null)}
-        title="Detalhes do Usuário"
-      >
-        {selectedUser && (
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">ID</label>
-              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.id}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Nome</label>
-              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.name}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">E-mail</label>
-              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.email}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Idade</label>
-              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.age} anos</p>
-            </div>
-          </div>
-        )}
-      </Modal>
+      <UserDetailsModal 
+        user={selectedUser} 
+        onClose={() => setSelectedUser(null)} 
+      />
     </>
   );
 }

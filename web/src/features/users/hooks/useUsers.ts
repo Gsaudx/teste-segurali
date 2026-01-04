@@ -37,3 +37,16 @@ export function useCreateUser() {
     },
   });
 }
+
+export function useUser(id: string) {
+  return useQuery({
+    queryKey: ['user', id],
+    queryFn: async () => {
+      if (!id) return null;
+      const { data } = await api.get<User>(`/users/${id}`);
+      return data;
+    },
+    enabled: !!id && id.length > 0,
+    retry: false,
+  });
+}
