@@ -168,6 +168,10 @@ export default function App() {
         {selectedUser && (
           <div className="space-y-4">
             <div>
+              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">ID</label>
+              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.id}</p>
+            </div>
+            <div>
               <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Nome</label>
               <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.name}</p>
             </div>
