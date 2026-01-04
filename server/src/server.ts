@@ -4,9 +4,11 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
 import { ZodError } from 'zod';
 import { userRoutes } from './routes/user.routes';
 import { AppError } from './errors/AppError';
+import { specs } from './swagger';
 
 const app = express();
 
@@ -22,6 +24,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/users', userRoutes);
 
 app.get('/health', (req, res) => {
@@ -44,7 +47,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   return res.status(500).json({ message: 'Internal server error' });
 });
 
-const PORT = 3333;
+const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
