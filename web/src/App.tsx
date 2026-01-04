@@ -49,10 +49,10 @@ export default function App() {
       <div className="max-w-4xl mx-auto space-y-8">
         <header>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Gerenciamento de Usuários
+            Gerenciamento de Usuários - Teste Segurali
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
-            Adicione e visualize usuários do sistema.
+            Adicionar e visualizar usuários. Desenvolvido por Guilherme Saud
           </p>
         </header>
 
