@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../lib/axios';
+import { api } from '../../../lib/axios';
 import type { CreateUserFormData, User } from '../schemas/user';
 
 interface PaginatedResponse {

@@ -1,13 +1,13 @@
 import { Eye } from 'lucide-react';
 import type { User } from '../schemas/user';
-import { Button } from './ui/Button';
+import { Button } from '../../../components/ui/Button';
 
-interface CardUsuarioProps {
+interface UserCardProps {
   user: User;
   onViewDetails: (user: User) => void;
 }
 
-export function CardUsuario({ user, onViewDetails }: CardUsuarioProps) {
+export function UserCard({ user, onViewDetails }: UserCardProps) {
   return (
     <div className="p-4 rounded-lg border border-gray-200 bg-white shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow-md transition-shadow flex items-center justify-between">
       <div className="flex flex-col gap-1">
