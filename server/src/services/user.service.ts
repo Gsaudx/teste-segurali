@@ -19,9 +19,9 @@ export class UserService {
     return this.userRepository.create(data);
   }
 
-  async listUsers({ page, limit }: PaginationDTO) {
+  async listUsers({ page, limit, name }: PaginationDTO) {
     const skip = (page - 1) * limit;
-    const { users, total } = await this.userRepository.findAll(skip, limit);
+    const { users, total } = await this.userRepository.findAll(skip, limit, name);
 
     return {
       data: users,

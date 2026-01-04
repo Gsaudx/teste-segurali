@@ -8,16 +8,24 @@ export class UserRepository {
     });
   }
 
-  async findAll(skip: number, take: number) {
+  async findAll(skip: number, take: number, name?: string) {
+    const where = name ? {
+      name: {
+        contains: name,
+        mode: 'insensitive' as const,
+      }
+    } : {};
+
     const [users, total] = await Promise.all([
       prisma.user.findMany({
         skip,
         take,
+        where,
         orderBy: {
           name: 'asc',
         },
       }),
-      prisma.user.count(),
+      prisma.user.count({ where }),
     ]);
 
     return { users, total };
