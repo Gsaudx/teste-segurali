@@ -12,7 +12,7 @@ interface PaginatedResponse {
   };
 }
 
-export function useUsers(page = 1, limit = 10) {
+export function useUsers(page = 1, limit = 5) {
   return useQuery({
     queryKey: ['users', page, limit],
     queryFn: async () => {
