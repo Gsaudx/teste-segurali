@@ -3,14 +3,16 @@ import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
-import { createUserSchema, type CreateUserFormData } from './schemas/user';
+import { createUserSchema, type CreateUserFormData, type User } from './schemas/user';
 import { useUsers, useCreateUser } from './hooks/useUsers';
 import { Input } from './components/ui/Input';
 import { Button } from './components/ui/Button';
-import { UserCard } from './components/UserCard';
+import { CardUsuario } from './components/CardUsuario';
+import { Modal } from './components/ui/Modal';
 
 export default function App() {
   const [page, setPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const { data: usersData, isLoading: isLoadingUsers, isError: isErrorUsers } = useUsers(page);
   const { mutateAsync: createUser, isPending: isCreating } = useCreateUser();
@@ -64,7 +66,7 @@ export default function App() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <Input
                 label="Nome"
-                placeholder="Ex: João Silva"
+                placeholder="Ex: Guilherme Saud"
                 error={errors.name?.message}
                 {...register('name')}
               />
@@ -72,7 +74,7 @@ export default function App() {
               <Input
                 label="E-mail"
                 type="email"
-                placeholder="Ex: joao@email.com"
+                placeholder="Ex: guilhermeSaud@gmail.com"
                 error={errors.email?.message}
                 {...register('email')}
               />
@@ -125,7 +127,11 @@ export default function App() {
               <>
                 <div className="space-y-3">
                   {users?.map((user) => (
-                    <UserCard key={user.id} user={user} />
+                    <CardUsuario 
+                      key={user.id} 
+                      user={user} 
+                      onViewDetails={setSelectedUser}
+                    />
                   ))}
                 </div>
 
@@ -153,6 +159,29 @@ export default function App() {
           </section>
         </main>
       </div>
+
+      <Modal
+        isOpen={!!selectedUser}
+        onClose={() => setSelectedUser(null)}
+        title="Detalhes do Usuário"
+      >
+        {selectedUser && (
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Nome</label>
+              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.name}</p>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">E-mail</label>
+              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.email}</p>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Idade</label>
+              <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedUser.age} anos</p>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
