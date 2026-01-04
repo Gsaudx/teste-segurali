@@ -5,8 +5,8 @@ import { createUserSchema, paginationSchema } from '../schemas/user.schema';
 export class UserController {
   private userService: UserService;
 
-  constructor() {
-    this.userService = new UserService();
+  constructor(userService: UserService) {
+    this.userService = userService;
   }
 
   create = async (req: Request, res: Response) => {

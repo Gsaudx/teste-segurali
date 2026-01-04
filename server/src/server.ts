@@ -2,14 +2,25 @@ import 'dotenv/config';
 import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { ZodError } from 'zod';
 import { userRoutes } from './routes/user.routes';
 import { AppError } from './errors/AppError';
 
 const app = express();
 
-app.use(express.json());
+app.use(helmet());
 app.use(cors());
+app.use(express.json());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests from this IP, please try again later.',
+});
+
+app.use(limiter);
 
 app.use('/users', userRoutes);
 
