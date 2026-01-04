@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import { AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
+import { useForm, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 import { createUserSchema, type CreateUserFormData } from '../schemas/user';
 import { useCreateUser } from '../hooks/useUsers';
 import { Input } from '../../../components/ui/Input';
 import { Button } from '../../../components/ui/Button';
 
 export function UserForm() {
-  const [apiError, setApiError] = useState<string | null>(null);
   const { mutateAsync: createUser, isPending: isCreating } = useCreateUser();
 
   const {
@@ -22,18 +20,26 @@ export function UserForm() {
   });
 
   const onSubmit = async (data: CreateUserFormData) => {
-    setApiError(null);
     try {
       await createUser(data);
+      toast.success('Usuário cadastrado com sucesso!');
       reset();
     } catch (error) {
       if (error instanceof AxiosError) {
         const message = error.response?.data?.message || 'Erro ao criar usuário';
-        setApiError(message);
+        toast.error(message);
       } else {
-        setApiError('Erro inesperado ao criar usuário');
+        toast.error('Erro inesperado ao criar usuário');
       }
     }
+  };
+
+  const onError = (errors: FieldErrors<CreateUserFormData>) => {
+    Object.values(errors).forEach((error) => {
+      if (error?.message) {
+        toast.error(error.message);
+      }
+    });
   };
 
   return (
@@ -42,7 +48,7 @@ export function UserForm() {
         Novo Usuário
       </h2>
       
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4">
         <Input
           label="Nome"
           placeholder="Ex: Guilherme Saud"
@@ -65,13 +71,6 @@ export function UserForm() {
           error={errors.age?.message}
           {...register('age', { valueAsNumber: true })}
         />
-
-        {apiError && (
-          <div className="p-3 rounded-md bg-red-50 text-red-700 text-sm flex items-center gap-2 border border-red-200">
-            <AlertCircle className="w-4 h-4" />
-            {apiError}
-          </div>
-        )}
 
         <Button type="submit" className="w-full" isLoading={isCreating}>
           Cadastrar Usuário
