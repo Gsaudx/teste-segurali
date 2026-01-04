@@ -16,6 +16,9 @@ export function useUsers(page = 1, limit = 5) {
   return useQuery({
     queryKey: ['users', page, limit],
     queryFn: async () => {
+      // Fake loading delay - Commented, I was just using it for testing
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      
       const { data } = await api.get<PaginatedResponse>('/users', {
         params: { page, limit },
       });
@@ -43,6 +46,10 @@ export function useUser(id: string) {
     queryKey: ['user', id],
     queryFn: async () => {
       if (!id) return null;
+      
+      // Fake loading delay - Commented, I was just using it for testing
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
+
       const { data } = await api.get<User>(`/users/${id}`);
       return data;
     },

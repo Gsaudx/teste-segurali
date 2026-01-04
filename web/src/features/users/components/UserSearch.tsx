@@ -5,6 +5,7 @@ import { useUser } from '../hooks/useUsers';
 import { Input } from '../../../components/ui/Input';
 import { Button } from '../../../components/ui/Button';
 import { UserCard } from './UserCard';
+import { UserCardSkeleton } from './skeletons/UserCardSkeleton';
 import { UserDetailsModal } from './UserDetailsModal';
 import type { User } from '../schemas/user';
 
@@ -58,6 +59,13 @@ export function UserSearch() {
           {isAxiosError(error) && error.response?.status === 404 
             ? 'Usuário não encontrado.' 
             : 'Erro ao buscar usuário. Verifique o ID e tente novamente.'}
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="mt-4">
+          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Buscando...</h3>
+          <UserCardSkeleton />
         </div>
       )}
 

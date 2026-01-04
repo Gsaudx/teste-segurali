@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUsers } from '../hooks/useUsers';
 import { UserCard } from './UserCard';
+import { UserCardSkeleton } from './skeletons/UserCardSkeleton';
 import { Button } from '../../../components/ui/Button';
 import { UserDetailsModal } from './UserDetailsModal';
 import type { User } from '../schemas/user';
@@ -28,7 +29,7 @@ export function UserList() {
         {isLoadingUsers ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+              <UserCardSkeleton key={i} />
             ))}
           </div>
         ) : isErrorUsers ? (
