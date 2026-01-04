@@ -1,7 +1,8 @@
 node_modules
 dist
 build
-.env
+# Estou deixando o .env porque a única informação "sensível" que tem nele é a VITE_API_URL, que não tem problema nenhum vazar (pelo menos para esse projeto)
+# .env
 *.db
 *.db-journal
 .DS_Store

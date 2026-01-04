@@ -1,6 +1,6 @@
 node_modules/
 
-# Estou deixando o .env porque a única informação "sensível" que tem nele é a connection string do banco de dados local (rodando no docker), que não tem problema nenhum vazar
+# Estou deixando o .env porque a única informação "sensível" que tem nele é a connection string do banco de dados local (rodando no docker), que não tem problema nenhum vazar (pelo menos para esse projeto)
 #.env
 
 /src/generated/prisma
