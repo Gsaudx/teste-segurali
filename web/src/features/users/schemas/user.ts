@@ -4,7 +4,9 @@ export const userSchema = z.object({
   id: z.string().uuid({ message: 'ID inválido' }),
   name: z.string().min(3, { message: 'Nome deve ter no mínimo 3 caracteres' }),
   email: z.string().email({ message: 'E-mail inválido' }),
-  age: z.number().min(18, { message: 'Idade deve ser maior ou igual a 18' }),
+  age: z
+    .number({ invalid_type_error: 'Idade é obrigatória' })
+    .min(18, { message: 'Idade deve ser maior ou igual a 18' }),
 });
 
 export const createUserSchema = userSchema.omit({ id: true });
