@@ -10,9 +10,13 @@ import { Button } from './components/ui/Button';
 import { UserCard } from './components/UserCard';
 
 export default function App() {
+  const [page, setPage] = useState(1);
   const [apiError, setApiError] = useState<string | null>(null);
-  const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } = useUsers();
+  const { data: usersData, isLoading: isLoadingUsers, isError: isErrorUsers } = useUsers(page);
   const { mutateAsync: createUser, isPending: isCreating } = useCreateUser();
+
+  const users = usersData?.data;
+  const meta = usersData?.meta;
 
   const {
     register,
@@ -99,7 +103,7 @@ export default function App() {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center justify-between">
               Usuários Cadastrados
               <span className="text-sm font-normal text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-                {users?.length || 0}
+                {meta?.total || 0}
               </span>
             </h2>
 
@@ -111,18 +115,40 @@ export default function App() {
               </div>
             ) : isErrorUsers ? (
                <div className="p-4 rounded-md bg-red-50 text-red-700 border border-red-200">
-                  Erro ao carregar usuários. Verifique se o backend está rodando.
+                  Erro ao carregar usuários. Verifique se o backend e o banco de dados estão rodando.
                </div>
             ) : users?.length === 0 ? (
               <p className="text-gray-500 text-center py-8">
                 Nenhum usuário cadastrado ainda.
               </p>
             ) : (
-              <div className="space-y-3">
-                {users?.map((user) => (
-                  <UserCard key={user.id} user={user} />
-                ))}
-              </div>
+              <>
+                <div className="space-y-3">
+                  {users?.map((user) => (
+                    <UserCard key={user.id} user={user} />
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between pt-4">
+                  <Button
+                    variant="secondary"
+                    disabled={page === 1}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  >
+                    Anterior
+                  </Button>
+                  <span className="text-sm text-gray-500">
+                    Página {page} de {meta?.totalPages || 1}
+                  </span>
+                  <Button
+                    variant="secondary"
+                    disabled={page >= (meta?.totalPages || 1)}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Próxima
+                  </Button>
+                </div>
+              </>
             )}
           </section>
         </main>

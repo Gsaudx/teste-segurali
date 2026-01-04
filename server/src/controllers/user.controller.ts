@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
-import { createUserSchema } from '../schemas/user.schema';
+import { createUserSchema, paginationSchema } from '../schemas/user.schema';
 
 export class UserController {
   private userService: UserService;
@@ -16,8 +16,9 @@ export class UserController {
   };
 
   list = async (req: Request, res: Response) => {
-    const users = await this.userService.listUsers();
-    return res.json(users);
+    const pagination = paginationSchema.parse(req.query);
+    const result = await this.userService.listUsers(pagination);
+    return res.json(result);
   };
 
   show = async (req: Request, res: Response) => {

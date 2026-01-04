@@ -2,11 +2,23 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/axios';
 import type { CreateUserFormData, User } from '../schemas/user';
 
-export function useUsers() {
+interface PaginatedResponse {
+  data: User[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export function useUsers(page = 1, limit = 10) {
   return useQuery({
-    queryKey: ['users'],
+    queryKey: ['users', page, limit],
     queryFn: async () => {
-      const { data } = await api.get<User[]>('/users');
+      const { data } = await api.get<PaginatedResponse>('/users', {
+        params: { page, limit },
+      });
       return data;
     },
   });

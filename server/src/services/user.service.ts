@@ -1,5 +1,5 @@
 import { UserRepository } from '../repositories/user.repository';
-import { CreateUserDTO } from '../schemas/user.schema';
+import { CreateUserDTO, PaginationDTO } from '../schemas/user.schema';
 import { AppError } from '../errors/AppError';
 
 export class UserService {
@@ -13,14 +13,25 @@ export class UserService {
     const userAlreadyExists = await this.userRepository.findByEmail(data.email);
 
     if (userAlreadyExists) {
-      throw new AppError('Usuário já existe', 409);
+      throw new AppError('Já existe um usuário com este e-mail', 409);
     }
 
     return this.userRepository.create(data);
   }
 
-  async listUsers() {
-    return this.userRepository.findAll();
+  async listUsers({ page, limit }: PaginationDTO) {
+    const skip = (page - 1) * limit;
+    const { users, total } = await this.userRepository.findAll(skip, limit);
+
+    return {
+      data: users,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async getUserById(id: string) {
