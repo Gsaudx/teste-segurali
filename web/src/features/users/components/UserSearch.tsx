@@ -55,7 +55,7 @@ export function UserSearch() {
       </form>
 
       {isError && (
-        <div className="p-4 rounded-md bg-red-50 text-red-700 border border-red-200 text-sm">
+        <div className="p-4 rounded-md bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/50 dark:border-red-700 dark:text-red-200 text-sm">
           {isAxiosError(error) && error.response?.status === 404 
             ? 'Usuário não encontrado.' 
             : 'Erro ao buscar usuário. Verifique o ID e tente novamente.'}

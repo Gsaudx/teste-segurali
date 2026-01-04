@@ -33,7 +33,7 @@ export function UserList() {
             ))}
           </div>
         ) : isErrorUsers ? (
-           <div className="p-4 rounded-md bg-red-50 text-red-700 border border-red-200">
+           <div className="p-4 rounded-md bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/50 dark:border-red-700 dark:text-red-200">
               Erro ao carregar usuários. Verifique se o backend e o banco de dados estão rodando.
            </div>
         ) : users?.length === 0 ? (
