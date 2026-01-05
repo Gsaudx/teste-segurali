@@ -16,8 +16,8 @@ export function useUsers(page = 1, limit = 5, name = '') {
   return useQuery({
     queryKey: ['users', page, limit, name],
     queryFn: async () => {
-      // Fake loading delay - Commented, I was just using it for testing
-      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Fake loading delay - Just to demonstrate the loading skeleton
+      await new Promise((resolve) => setTimeout(resolve, 200));
       
       const { data } = await api.get<PaginatedResponse>('/users', {
         params: { page, limit, name },
@@ -47,8 +47,8 @@ export function useUser(id: string) {
     queryFn: async () => {
       if (!id) return null;
       
-      // Fake loading delay - Commented, I was just using it for testing
-      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Fake loading delay - Just to demonstrate the loading skeleton
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
       const { data } = await api.get<User>(`/users/${id}`);
       return data;
