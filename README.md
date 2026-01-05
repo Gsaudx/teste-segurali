@@ -112,6 +112,7 @@ A aplicação web estará disponível em `http://localhost:5173`. **Para acessar
 
 Embora o projeto esteja completo e funcional, penso em possíveis melhorias para evoluir a aplicação em um cenário de longo prazo:
 
+- **Atualizar e Apagar Usuários**: Desenvolver funcionalidades para atualizar e apagar usuários.
 - **Testes de Integração**: Adicionar testes que cubram o fluxo completo (API -> Banco) e testes de componentes no frontend.
 - **Autenticação e Autorização**: Implementar JWT e controle de acesso (RBAC) para proteger as rotas sensíveis.
 - **CI/CD**: Configurar pipelines (GitHub Actions) para rodar testes e linting automaticamente a cada push na main.
