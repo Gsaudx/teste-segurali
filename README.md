@@ -1,6 +1,6 @@
 # Segurali Take-Home
 
-Projeto desenvolvido como teste técnico para a empresa Segurali, consistindo em um CRUD de usuários completo com Backend (Node.js) e Frontend (React) conforme os requisitos enviados pela Francisca.
+Projeto desenvolvido como teste técnico para a empresa Segurali, consistindo em um CREATE e READ de usuários completo com Backend (Node.js) e Frontend (React) conforme os requisitos enviados pela Francisca.
 <br>
 Autor: Guilherme Saud, 01/01/2026.
 
