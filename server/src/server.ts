@@ -9,6 +9,7 @@ import { ZodError } from 'zod';
 import { userRoutes } from './routes/user.routes';
 import { AppError } from './errors/AppError';
 import { specs } from './swagger';
+import { env } from './env';
 
 const app = express();
 
@@ -47,7 +48,6 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   return res.status(500).json({ message: 'Internal server error' });
 });
 
-const PORT = process.env.PORT || 3333;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(env.PORT, () => {
+  console.log(`Server running on port ${env.PORT}`);
 });
