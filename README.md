@@ -107,6 +107,7 @@ A aplicação web estará disponível em `http://localhost:5173`. **Para acessar
 9. **Injeção de Dependência**: Backend usa Injeção de Dependência manual. `UserController` recebe `UserService`, que recebe `UserRepository`. Isso desacopla as classes e facilita muito a criação de testes unitários com mocks (nesse caso, implementação futura)
 10. **Segurança**: `helmet` para proteger headers HTTP e `express-rate-limit` para evitar abusos básicos da API.
 11. **Documentação**: Implementei Swagger/OpenAPI (`/api-docs`) para facilitar o consumo da API e testes manuais.
+12. **Uso do Citext (PostgreSQL)**: A coluna `name` utiliza o tipo `citext` (case-insensitive text), uma extensão oficial do PostgreSQL. Isso garante que a ordenação e busca de usuários sejam case-insensitive automaticamente no banco de dados, sem necessidade de funções `LOWER()` no código ou SQL cru. Escolhi essa abordagem por ser a solução mais limpa e performática para PostgreSQL.
 
 ## Pontos de Melhoria (Próximos Passos)
 
